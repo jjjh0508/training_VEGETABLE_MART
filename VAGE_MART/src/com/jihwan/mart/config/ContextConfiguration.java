@@ -1,5 +1,6 @@
 package com.jihwan.mart.config;
 
+
 import org.apache.commons.dbcp.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -10,6 +11,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+
+
 
 @Configuration
 @ComponentScan("com.jihwan.mart")
@@ -54,4 +57,6 @@ public class ContextConfiguration{
         return new SqlSessionTemplate(sqlSessionFactory(context));
 
     }
+
+
 }

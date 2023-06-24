@@ -12,6 +12,9 @@ public class MartDTO {
         this.amount = amount;
     }
 
+    public MartDTO() {
+    }
+
     public void setProNum(int proNum) {
         this.proNum = proNum;
     }

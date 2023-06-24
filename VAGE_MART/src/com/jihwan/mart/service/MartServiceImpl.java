@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service("martService")
 public class MartServiceImpl implements  MartService {
     private final MartDAO martDAO;
@@ -17,7 +19,7 @@ public class MartServiceImpl implements  MartService {
     }
 
     @Override
-    public MartDTO selectProduct() {
+    public List<MartDTO> selectProduct() {
         return martDAO.selectProduct(sqlSession);
     }
 }
