@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+    <mapper namespace="MartMapper">
+        <resultMap id="proResultMap" type="com.jihwan.mart.dto.MartDTO">
+            <id property="proNum" column="PRO_NUM"/>
+            <result property="fruitNum" column="FRUIT_NUM"/>
+            <result property="amount" column="AMOUNT"/>
+        </resultMap>
+
+        <select id="selectProduct" resultMap="proResultMap">
+            SELECT
+                PRO_NUM ,
+                FRUIT_NUM ,
+                AMOUNT
+            FROM PRODUCT
+        </select>
+</mapper>
