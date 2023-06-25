@@ -16,8 +16,6 @@ public class TestScheduler {
 
             // JOB Data 객체
             JobDataMap jobDataMap = new JobDataMap();
-            jobDataMap.put("jobSays", "Say Hello World!");
-            jobDataMap.put("myFloatValue", 3.1415f);
 
             /**
              * JobDetail 은 Job이 스케줄러에 추가될 때 Quartz Client에 의해 작성 (작업 인스턴스 정의)
@@ -28,8 +26,6 @@ public class TestScheduler {
              *     - Java Map interface를 구현한 것으로 원시 유형의 데이터를 저장하고 검색하기 위한 몇 가지 편의 방법이 추가
              */
             JobDetail jobDetail = JobBuilder.newJob(JobExecutor.class)
-                    .withIdentity("myJob", "group1")
-                    .setJobData(jobDataMap)
                     .build();
 
             /**
@@ -43,26 +39,26 @@ public class TestScheduler {
 
             // SimpleTrigger
             @SuppressWarnings("deprecation")
-            SimpleTrigger simpleTrigger = (SimpleTrigger) TriggerBuilder.newTrigger()
-                    .withIdentity("simple_trigger", "simple_trigger_group")
-                    .startAt(new Date(2021 - 1900, 10, 14, 13, 0)) // 2021.11.14 오후 1시
-                    .withSchedule(SimpleScheduleBuilder.repeatSecondlyForTotalCount(5, 10)) // 10초마다 반복하며, 최대 5회 실행
-                    .forJob(jobDetail)
-                    .build();
+//            SimpleTrigger simpleTrigger = (SimpleTrigger) TriggerBuilder.newTrigger()
+//                    .withIdentity("simple_trigger", "simple_trigger_group")
+//                    .startAt(new Date(2021 - 1900, 10, 14, 13, 0)) // 2021.11.14 오후 1시
+//                    .withSchedule(SimpleScheduleBuilder.repeatSecondlyForTotalCount( 10)) // 10초마다 반복하며, 최대 5회 실행
+//                    .forJob(jobDetail)
+//                    .build();
 
             // CronTrigger
             CronTrigger cronTrigger = (CronTrigger) TriggerBuilder.newTrigger()
-                    .withIdentity("trggerName", "cron_trigger_group")
-                    .withSchedule(CronScheduleBuilder.cronSchedule("5 * * * * ?")) // 매 5초마다 실행
+                    .withIdentity("trggerName", "Select.class")
+                    .withSchedule(CronScheduleBuilder.cronSchedule("0 0 0 * * ?")) //
                     //                    .withSchedule(CronScheduleBuilder.cronSchedule("0 0/2 8-17 * * ?")) // 매일 오전 8시에서 오후 5시 사이에 격분마다 실행
                     .forJob(jobDetail)
                     .build();
 
             Set<Trigger> triggerSet = new HashSet<Trigger>();
-            triggerSet.add(simpleTrigger);
+//            triggerSet.add(simpleTrigger);
             triggerSet.add(cronTrigger);
 
-            scheduler.scheduleJob(jobDetail, triggerSet, false);
+            scheduler.scheduleJob(jobDetail, triggerSet, true);
             scheduler.start();
 
         } catch (Exception e) {

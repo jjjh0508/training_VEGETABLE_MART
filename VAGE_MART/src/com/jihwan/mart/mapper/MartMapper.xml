@@ -5,17 +5,77 @@
 
 
     <mapper namespace="MartMapper">
-        <resultMap id="proResultMap" type="com.jihwan.mart.dto.MartDTO">
+        <resultMap id="fruitResultMap" type="com.jihwan.mart.dto.FruitDTO">
             <id property="proNum" column="PRO_NUM"/>
             <result property="fruitNum" column="FRUIT_NUM"/>
+            <result property="fruitName" column="FRUIT_NAME"/>
             <result property="amount" column="AMOUNT"/>
         </resultMap>
+    <resultMap id="vegResultMap" type="com.jihwan.mart.dto.VegetableDTO">
+        <id property="proNum" column="PRO_NUM"/>
+        <result property="vegNum" column="VEG_NUM"/>
+        <result property="vegName" column="VEG_NAME"/>
+        <result property="amount" column="AMOUNT"/>
+    </resultMap>
+    <resultMap id="orderResultMap" type="com.jihwan.mart.dto.OrderDTO">
+        <id property="ordNum" column="ORD_NUM"/>
+        <result property="proNum" column="PRO_NUM"/>
+        <result property="weigh" column="WEIGH"/>
 
-        <select id="selectProduct" resultMap="proResultMap">
+    </resultMap>
+
+
+        <select id="selectFruitProduct" resultMap="fruitResultMap">
             SELECT
-                PRO_NUM ,
-                FRUIT_NUM ,
+                P.PRO_NUM ,
+                P.FRUIT_NUM ,
+                F.FRUIT_NAME ,
                 AMOUNT
-            FROM PRODUCT
+            FROM PRODUCT P
+            JOIN FRUIT F ON(P.FRUIT_NUM=F.FRUIT_NUM)
         </select>
+
+    <select id="selectVegetableProduct" resultMap="vegResultMap">
+        SELECT
+            P.PRO_NUM ,
+            P.veg_NUM ,
+            V.veg_NAME ,
+            AMOUNT
+        FROM PRODUCT P
+        JOIN VEGETABLE V ON(P.VEG_NUM=V.VEG_NUM)
+    </select>
+
+    <select id="selectOrder" resultMap="orderResultMap">
+        SELECT
+            ORD_NUM ,
+            PRO_NUM ,
+            WEIGH
+        FROM PRO_ORDER
+
+    </select>
+
+
+
+
+    <insert id="orderSale" parameterType="com.jihwan.mart.dto.SaleFruitDTO">
+        INSERT INTO PRO_ORDER(ORD_NUM , PRO_NUM, WEIGH)
+        VALUES (SEQ_ORD_NUM.NEXTVAL,#{proNum},#{weigh})
+
+    </insert>
+
+    <insert id="payment" parameterType="com.jihwan.mart.dto.PayDTO">
+        INSERT INTO PAYMENT(ORD_NUM , ALL_PRICE)
+        VALUES (SEQ_ORD_NUM.CURRVAL,#{price})
+
+    </insert>
+
+    <insert id="calculate">
+        INSERT INTO CALCULATE
+        SELECT SYSDATE, O.PRO_NUM, SUM(O.WEIGH) , SUM(P.ALL_PRICE)
+        FROM PRO_ORDER O
+                 JOIN PAYMENT P ON (P.ORD_NUM=O.ORD_NUM)
+        GROUP BY SYSDATE , O.PRO_NUM
+    </insert>
+
+
 </mapper>
