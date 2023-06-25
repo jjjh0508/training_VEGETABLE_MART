@@ -33,6 +33,12 @@ public class JobExecutor implements Job {
         boolean result= martService.calculate();
         if(result){
             System.out.println("정산성공");
+            boolean reuslt2 = martService.orderClear();
+            if(reuslt2){
+                System.out.println("주문상태 변경 완료");
+            }else {
+                System.out.println("주문 상태 변경 실패 확인바랍니다.");
+            }
         }else {
             System.out.println("정산실패");
         }

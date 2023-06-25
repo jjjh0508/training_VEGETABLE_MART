@@ -17,4 +17,6 @@ public interface MartDAO {
     public  int calculate(SqlSessionTemplate sqlSession);
 
     public List<OrderDTO> selectOrder(SqlSessionTemplate sqlSession);
+
+    public int orderClear(SqlSessionTemplate sqlSession);
 }

@@ -73,9 +73,15 @@
         INSERT INTO CALCULATE
         SELECT SYSDATE, O.PRO_NUM, SUM(O.WEIGH) , SUM(P.ALL_PRICE)
         FROM PRO_ORDER O
-                 JOIN PAYMENT P ON (P.ORD_NUM=O.ORD_NUM)
+        JOIN PAYMENT P ON (P.ORD_NUM=O.ORD_NUM)
+        WHERE O.STATUS= 'Y'
         GROUP BY SYSDATE , O.PRO_NUM
     </insert>
 
+    <update id="orderClear">
+        UPDATE PRO_ORDER
+        SET status ='N'
+        WHERE STATUS='Y'
+    </update>
 
 </mapper>

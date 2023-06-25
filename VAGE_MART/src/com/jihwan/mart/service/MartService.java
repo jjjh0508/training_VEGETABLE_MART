@@ -13,6 +13,8 @@ public interface MartService {
 
     public boolean  calculate();
 
+    public boolean orderClear();
+
 
 
 

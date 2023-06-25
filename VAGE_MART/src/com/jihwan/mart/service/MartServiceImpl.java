@@ -67,4 +67,14 @@ public class MartServiceImpl implements  MartService {
         }
 
     }
+
+    @Override
+    public boolean orderClear() {
+        int result = martDAO.orderClear(sqlSession);
+        if(result>=1){
+            return  true;
+        }else{
+            return false;
+        }
+    }
 }

@@ -40,4 +40,10 @@ public class MartDAOImpt implements  MartDAO {
     public int calculate(SqlSessionTemplate sqlSession) {
         return sqlSession.insert("MartMapper.calculate");
     }
+
+
+    @Override
+    public int orderClear(SqlSessionTemplate sqlSession) {
+        return sqlSession.update("MartMapper.orderClear");
+    }
 }
